@@ -37,8 +37,12 @@ export default function DashboardPage() {
   useEffect(() => {
     if (status !== "authenticated") return;
     const token = session?.accessToken;
-    if (token) localStorage.setItem("caregiverToken", token);
-
+    if (!token) {
+      toast.error("Session error. Please log in again.");
+      router.push("/caregiver/login");
+      return;
+    }
+    localStorage.setItem("caregiverToken", token);
     loadData();
   }, [status, session]);
 
@@ -174,11 +178,10 @@ export default function DashboardPage() {
                     <h3 className="font-bold text-care-text text-lg">{p.name}</h3>
                     <p className="text-care-muted text-sm">Age {p.age} · {p.cognitiveStage} stage</p>
                   </div>
-                  <span className={`ml-auto text-xs font-bold px-2.5 py-1 rounded-lg capitalize ${
-                    p.cognitiveStage === "mild" ? "bg-green-50 text-green-600" :
-                    p.cognitiveStage === "moderate" ? "bg-yellow-50 text-yellow-600" :
-                    "bg-red-50 text-red-600"
-                  }`}>
+                  <span className={`ml-auto text-xs font-bold px-2.5 py-1 rounded-lg capitalize ${p.cognitiveStage === "mild" ? "bg-green-50 text-green-600" :
+                      p.cognitiveStage === "moderate" ? "bg-yellow-50 text-yellow-600" :
+                        "bg-red-50 text-red-600"
+                    }`}>
                     {p.cognitiveStage}
                   </span>
                 </div>

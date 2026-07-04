@@ -4,9 +4,12 @@ const Patient = require("../models/Patient");
 const DistressEvent = require("../models/DistressEvent");
 const authMiddleware = require("../middleware/auth");
 
+router.use(authMiddleware);  // ← ADD THIS
+
+
 router.get("/", async (req, res) => {
   try {
-    const patients = await Patient.find().select("_id name age cognitiveStage");
+    const patients = await Patient.find().select("_id name age cognitiveStage profilePhoto");
     res.json(patients);
   } catch (err) {
     res.status(500).json({ error: "Server error" });

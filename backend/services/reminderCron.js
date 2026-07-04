@@ -22,7 +22,7 @@ async function checkReminders(io) {
     for (const reminder of dueReminders) {
       if (reminder.lastFired) {
         const timeSinceFired = now - new Date(reminder.lastFired);
-        if (timeSinceFired < 90000) continue;
+        if (timeSinceFired < 55000) continue;
       }
 
       await Reminder.findByIdAndUpdate(reminder._id, { lastFired: now });

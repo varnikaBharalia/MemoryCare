@@ -45,8 +45,7 @@ export default function LoginPage() {
       const data = await res.json();
       if (!res.ok) throw new Error(data.error);
 
-     
-      localStorage.setItem("caregiverToken", data.token);
+      // localStorage.setItem("caregiverToken", data.token);
       await signIn("credentials", {
         email: form.email,
         password: form.password,
